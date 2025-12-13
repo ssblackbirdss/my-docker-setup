@@ -1,0 +1,17 @@
+version: "3.8"
+
+services:
+  whisper:
+    build: .
+    image: whisper-official-cpu:latest
+    restart: "no"
+    volumes:
+      - ./audio:/audio
+      - whisper_cache:/root/.cache/whisper
+    environment:
+      WHISPER_MODEL: "medium"
+    # Let transcribe.py read WHISPER_MODEL from the container env (no host interpolation)
+    command: [ "/audio/t1.mp3","--language", "fa" ]
+
+volumes:
+  whisper_cache:
