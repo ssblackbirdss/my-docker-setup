@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.pyc
+*.pyd
+*.pyo
+.venv/
+venv/
+
+# Logs
+*.log
+log/
+logs/
+
+# SQLite database
+*.sqlite3
+
+# Docker
+# Docker socket, if mounted
+# .dockerignore and docker-compose files should generally be committed
+
+# Whisper project
+whisper/audio/processed/
+whisper/audio/transcripts/
+
+# WordPress project
+# Assuming wordpress/ contains a standard WordPress installation via Docker
+wordpress/wp-content/uploads/
+wordpress/wp-config.php
+# Add other generated WordPress files if they appear outside the Docker context
