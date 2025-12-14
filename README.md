@@ -47,11 +47,9 @@ Follow these steps to get your Dockerized services up and running.
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/YOUR_REPOSITORY_NAME.git
-cd YOUR_REPOSITORY_NAME
+git clone https://github.com/ssblackbirdss/my-docker-setup.git
+cd my-docker-setup
 ```
-
-(Replace `YOUR_USERNAME` and `YOUR_REPOSITORY_NAME` with your actual GitHub details.)
 
 ### 2. Configure Whisper Service
 
@@ -104,16 +102,15 @@ This command will:
 
 To transcribe an audio file:
 
-1.  Place your audio file (e.g., `example.mp3`) into the `whisper/audio/` directory.
+1.  Place your audio / video file (e.g., `example.mp3`) into the `whisper/audio/` directory.
 2.  You will need to run the transcription script from within the Docker container. You can execute commands in the running container:
 
     ```bash
-    docker-compose -f whisper/docker-compose.yml exec whisper-service python transcribe.py your_audio_file.mp3
+    docker-compose up --build
     ```
 
-    (Replace `whisper-service` with the actual service name from `whisper/docker-compose.yml` if different, and `your_audio_file.mp3` with your audio file's name.)
-
     The transcribed text will be saved in `whisper/audio/transcripts/`.
+    and the audio / video will be moved to `whisper/audio/processed`.
 
 ### WordPress
 
@@ -125,4 +122,4 @@ Feel free to fork this repository, open issues, and submit pull requests.
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+this is unlicensed repo do whatever you want
