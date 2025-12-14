@@ -19,9 +19,7 @@ logs/
 # .dockerignore and docker-compose files should generally be committed
 
 # Whisper project
-whisper/audio/processed/
-whisper/audio/transcripts/
-
+whisper/audio/
 # WordPress project
 # Assuming wordpress/ contains a standard WordPress installation via Docker
 wordpress/wp-content/uploads/
