@@ -1,10 +1,15 @@
+# syntax=docker/dockerfile:1.4
 FROM python:3.11-slim
 
 ENV DEBIAN_FRONTEND=noninteractive \
     PYTHONUNBUFFERED=1 \
-    LANG=C.UTF-8
+    LANG=C.UTF-8 \
+    WHISPER_MODEL=small \
+    WHISPER_LANGUAGE=""
 
-# system deps (ffmpeg required by whisper; libsndfile required by torchaudio)
+WORKDIR /app
+
+# 1) Install system packages (rarely change)
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
       ffmpeg \
@@ -14,18 +19,27 @@ RUN apt-get update && \
       git && \
     rm -rf /var/lib/apt/lists/*
 
-WORKDIR /app
+# 2) Copy requirements and install Python deps (this layer is cached unless requirements.txt changes)
+COPY requirements.txt /tmp/requirements.txt
 
-# Install CPU-only PyTorch wheels + torchaudio, then openai-whisper.
-# If you want reproducible builds put these in requirements.txt and pin exact versions.
-RUN pip install --no-cache-dir \
-      --index-url https://download.pytorch.org/whl/cpu \
-      "torch==2.7.1" "torchaudio==2.7.1" && \
+# Use BuildKit cache for pip wheel downloads (fast subsequent builds).
+# If BuildKit is not enabled, the mount line will be ignored.
+RUN --mount=type=cache,target=/root/.cache/pip \
+    pip install --no-cache-dir \
+      --extra-index-url https://download.pytorch.org/whl/cpu \
+      -r /tmp/requirements.txt
+
+RUN --mount=type=cache,target=/root/.cache/pip \
     pip install --no-cache-dir openai-whisper
 
-# copy your transcribe script
+# 3) Copy application files last so changes to code don't bust the pip install layer
 COPY transcribe.py /app/transcribe.py
+# COPY other app files if you have them (keep minimal to maximize cache hits)
+# COPY src/ /app/src/
+
+# Make audio and whisper cache dirs (these will typically be host-mounted at runtime)
+RUN mkdir -p /audio /root/.cache/whisper
 
 VOLUME [ "/audio", "/root/.cache/whisper" ]
-ENTRYPOINT ["python", "/app/transcribe.py"]
 
+ENTRYPOINT ["python", "/app/transcribe.py"]

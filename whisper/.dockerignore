@@ -1,0 +1,8 @@
+# ignore local audio and caches so they don't invalidate build context
+audio
+whisper_cache
+__pycache__
+*.pyc
+*.pyo
+.env
+.git

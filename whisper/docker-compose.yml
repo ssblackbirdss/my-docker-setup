@@ -9,9 +9,8 @@ services:
       - ./audio:/audio
       - whisper_cache:/root/.cache/whisper
     environment:
-      WHISPER_MODEL: "medium"
-    # Let transcribe.py read WHISPER_MODEL from the container env (no host interpolation)
-    command: [ "/audio/t1.mp3","--language", "fa" ]
-
+      WHISPER_MODEL: "medium"        # change if desired
+      WHISPER_LANGUAGE: "fa"        # optional default language (remove or set to "" for auto-detect)
+    # No hard-coded 'command' here; the container will run the entrypoint script which auto-detects audio.
 volumes:
   whisper_cache:
