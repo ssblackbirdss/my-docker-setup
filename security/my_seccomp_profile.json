@@ -1,0 +1,14 @@
+{
+  "defaultAction": "SCMP_ACT_ALLOW",
+  "architectures": ["SCMP_ARCH_X86_64", "SCMP_ARCH_X86", "SCMP_ARCH_X32"],
+  "syscalls": [
+    {
+      "name": "{give the things that you got from note.txt strace e.g chmod}",
+      "action": "SCMP_ACT_ERRNO"
+    },
+    {
+      "name": "{give the things that you got from note.txt strace e.g fchmod}",
+      "action": "SCMP_ACT_ERRNO"
+    }
+  ]
+}

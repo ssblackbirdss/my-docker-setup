@@ -1,0 +1,22 @@
+Description=my slice for docker container
+
+[Slice]
+CPUAccounting=true
+CPUQuota={number}%
+CPUQuotaPeriodSec={number}s
+CPUWeight={number}
+
+MemoryAccounting=true
+MemoryHigh={lower number than memory max number}M
+MemoryMax={number}M
+MemorySwapLimit={number}M
+
+IOAccounting=yes
+IOWeight={number}
+
+TasksAccounting=yes
+TasksMax={number}
+
+IPAccounting=yes
+IPAddressAllow={internal ip here with prefix}
+IPAddressDeny=any

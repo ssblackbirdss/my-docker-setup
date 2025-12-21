@@ -78,7 +78,7 @@ From the root directory of the repository (e.g., `My-Docker-Setup/`), you can br
 To start both the Whisper and WordPress services:
 
 ```bash
-docker-compose -f whisper/docker-compose.yml -f wordpress/docker-compose.yaml up -d
+docker-compose -f leantime/docker-compose.yml -f whisper/docker-compose.yml -f wordpress/docker-compose.yaml up -d
 ```
 
 This command will:
@@ -95,8 +95,6 @@ This command will:
   ```bash
   docker-compose -f whisper/docker-compose.yml ps
   ```
-
-## Usage
 
 ### Whisper Audio Transcription
 

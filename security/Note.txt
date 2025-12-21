@@ -1,0 +1,61 @@
+##############################
+outside the container do
+##############################
+run multistage + distroless docker file
+To run the docker as root run: docker run -it --user root {myimage}
+# there is no way to switch user to root in the docker container
+run command : docker run -u blackbird --security-opt=no-new-privileges --cap-drop all --cap-add {add Your new capability here} --read-only --tmpfs {/folder} --pids-limit={number}
+# --tempfs is place that you can make and edit files
+
+you can run docker run --cgroup-parent=my_limits.slice
+
+you can run docker run seccomp={path of the file}
+
+some tmpfs examples:
+--tmpfs /tmp:rw,noexec,nosuid,size=64m \
+--tmpfs /home/blackbird/.cache:rw,noexec,nosuid,size=16m \
+
+##############################
+inside the container do
+##############################
+
+use docker bench security and docker scout and inspec and chefinspect website and lynis for auditing install auditd in the container
+change ssh in /etc/ssh/ssh_config 
+
+use my_limits.slice in the /etc/systemd/system/my_limits.slice
+
+run grep SECCOMP /boot/config-$(uname -r) and you should have 3 y's as answer
+
+install strace for systemcall's
+run strace -qc chmod +x /home/blackbird
+and then read syscall's man page with man 2 syscalls
+block everything that you don't need 
+
+do the apparmor/selinux based on the project
+
+#########################
+docker host
+#########################
+
+You configure the Docker daemon, not the container.
+
+One-time host setup
+sudo useradd --system dockremap
+echo "dockremap:100000:65536" | sudo tee -a /etc/subuid
+echo "dockremap:100000:65536" | sudo tee -a /etc/subgid
+
+Enable it globally
+
+/etc/docker/daemon.json:
+
+{
+  "userns-remap": "default"
+}
+
+
+Restart Docker:
+
+sudo systemctl restart docker
+
+
+write a docker tls authentication 

@@ -25,3 +25,7 @@ whisper/audio/
 wordpress/wp-content/uploads/
 wordpress/wp-config.php
 # Add other generated WordPress files if they appear outside the Docker context
+.github/
+.gemini/
+gha-creds-*.json
+GEMINI.md
