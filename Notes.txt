@@ -1,0 +1,3 @@
+
+installed extention in docker :
+penpot, disk usage, logs explorer 
