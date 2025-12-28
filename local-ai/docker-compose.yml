@@ -17,10 +17,17 @@ services:
       - "3000:8080"
     volumes:
       - openwebui_data:/app/backend/data
+      - ./whisper_models:/app/backend/whisper-models   # host folder for Whisper models
     environment:
-      - OLLAMA_BASE_URL=http://ollama:11434
-      - ENABLE_API_KEYS=true
-      - USER_PERMISSIONS_FEATURES_API_KEYS=true
+      OLLAMA_BASE_URL: "http://ollama:11434"
+      ENABLE_API_KEYS: "true"
+      USER_PERMISSIONS_FEATURES_API_KEYS: "true"
+
+      # --- Whisper / STT settings (local Whisper)
+      AUDIO_STT_ENGINE: ""
+      WHISPER_MODEL: "small"                   # tiny / base / small / medium / large
+      WHISPER_MODEL_DIR: "/app/backend/whisper-models"
+      WHISPER_LANGUAGE: ""                 
     restart: unless-stopped
 
   kokoro:

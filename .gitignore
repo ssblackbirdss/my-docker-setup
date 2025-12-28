@@ -18,6 +18,10 @@ logs/
 # Docker socket, if mounted
 # .dockerignore and docker-compose files should generally be committed
 
+#local-ai project
+
+local-ai/whisper_models/*
+
 # Whisper project
 whisper/audio/
 # WordPress project
